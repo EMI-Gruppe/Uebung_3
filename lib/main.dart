@@ -145,8 +145,8 @@ class InformationBoxBig extends StatelessWidget {
                   aspectRatio: 20 / 20,
                   child: ClipRRect(
                     borderRadius: const BorderRadius.only(
-                        topLeft: Radius.circular(5),
-                        bottomLeft: Radius.circular(5)),
+                        topLeft: Radius.circular(8),
+                        bottomLeft: Radius.circular(8)),
                     child: Image(
                       image: NetworkImage(informationBoxBigImg),
                       width: 20,
@@ -189,40 +189,31 @@ class InformationBoxSmall extends StatelessWidget {
   @override
   Widget build(BuildContext context) {
     return Container(
+      margin: const EdgeInsets.only(bottom: 10),
+      padding: const EdgeInsets.all(5),
+      decoration: BoxDecoration(
+          borderRadius: BorderRadius.circular(10),
+          border:
+              Border.all(color: const Color.fromRGBO(254, 60, 0, 1), width: 2)),
       width: 200,
       child: Row(
         children: <Widget>[
+          const Expanded(
+            flex: 2,
+            child: Icon(
+              Icons.signpost_outlined,
+              color: Color.fromRGBO(254, 60, 0, 1),
+              size: 24.0,
+            ),
+          ),
           Expanded(
-            flex: 6,
-            child: Container(
-              margin: const EdgeInsets.only(bottom: 10),
-              padding: const EdgeInsets.all(5),
-              decoration: BoxDecoration(
-                  borderRadius: BorderRadius.circular(10),
-                  border: Border.all(
-                      color: const Color.fromRGBO(254, 60, 0, 1), width: 2)),
-              child: Row(
-                children: <Widget>[
-                  const Expanded(
-                    flex: 2,
-                    child: Icon(
-                      Icons.signpost_outlined,
-                      color: Color.fromRGBO(254, 60, 0, 1),
-                      size: 24.0,
-                    ),
-                  ),
-                  Expanded(
-                    flex: 8,
-                    child: Text(
-                      informationBoxSmallText,
-                      style: const TextStyle(
-                          fontWeight: FontWeight.bold,
-                          fontSize: 15,
-                          color: Color.fromRGBO(254, 60, 0, 1)),
-                    ),
-                  ),
-                ],
-              ),
+            flex: 8,
+            child: Text(
+              informationBoxSmallText,
+              style: const TextStyle(
+                  fontWeight: FontWeight.bold,
+                  fontSize: 15,
+                  color: Color.fromRGBO(254, 60, 0, 1)),
             ),
           ),
         ],

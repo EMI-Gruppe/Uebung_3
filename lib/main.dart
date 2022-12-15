@@ -1,3 +1,5 @@
+// ignore_for_file: prefer_interpolation_to_compose_strings, use_key_in_widget_constructors
+
 import 'package:flutter/material.dart';
 
 void main() {
@@ -6,130 +8,225 @@ void main() {
 
 class MyApp extends StatelessWidget {
   const MyApp({super.key});
-
-  // This widget is the root of your application.
   @override
   Widget build(BuildContext context) {
-    return MaterialApp(
+    return const MaterialApp(
       title: 'App Übung 3',
-      theme: ThemeData(
-        // This is the theme of your application.
-        //
-        // Try running your application with "flutter run". You'll see the
-        // application has a blue toolbar. Then, without quitting the app, try
-        // changing the primarySwatch below to Colors.green and then invoke
-        // "hot reload" (press "r" in the console where you ran "flutter run",
-        // or simply save your changes to "hot reload" in a Flutter IDE).
-        // Notice that the counter didn't reset back to zero; the application
-        // is not restarted.
-        primarySwatch: Colors.blue,
-      ),
-      home: const MyHomePage(title: 'Tour Details'),
+      home: MyHomePage(title: 'Tour Details'),
     );
   }
 }
 
 class MyHomePage extends StatefulWidget {
   const MyHomePage({super.key, required this.title});
-
-  // This widget is the home page of your application. It is stateful, meaning
-  // that it has a State object (defined below) that contains fields that affect
-  // how it looks.
-
-  // This class is the configuration for the state. It holds the values (in this
-  // case the title) provided by the parent (in this case the App widget) and
-  // used by the build method of the State. Fields in a Widget subclass are
-  // always marked "final".
-
   final String title;
-
   @override
   State<MyHomePage> createState() => _MyHomePageState();
 }
 
 class _MyHomePageState extends State<MyHomePage> {
-  int _counter = 0;
-
-  void _incrementCounter() {
-    setState(() {
-      // This call to setState tells the Flutter framework that something has
-      // changed in this State, which causes it to rerun the build method below
-      // so that the display can reflect the updated values. If we changed
-      // _counter without calling setState(), then the build method would not be
-      // called again, and so nothing would appear to happen.
-      _counter++;
-    });
+  @override
+  Widget build(BuildContext context) {
+    return Scaffold(
+        resizeToAvoidBottomInset: false,
+        appBar: AppBar(
+          title: Text(widget.title),
+          backgroundColor: const Color.fromRGBO(254, 60, 0, 1),
+        ),
+        drawer: const Drawer(),
+        body: SingleChildScrollView(
+            child: Container(
+                margin: const EdgeInsets.all(20),
+                child: Column(
+                    crossAxisAlignment: CrossAxisAlignment.start,
+                    children: [
+                      Container(
+                        margin: const EdgeInsets.only(
+                            left: 10, right: 10, bottom: 20),
+                        child: Column(
+                            crossAxisAlignment: CrossAxisAlignment.start,
+                            children: const <Widget>[
+                              HeaderContainer("Highlight Tour"),
+                              LoremTextContainer(),
+                              InformationPair("Gebäude", "Zoo"),
+                              InformationPair("Sammlung", "Interesannte Tiere"),
+                              InformationPair("Dauer", "1 Stunde"),
+                              InformationBoxSmall("TOUR STARTEN"),
+                            ]),
+                      ),
+                      const InformationBoxBig("Eule",
+                          'https://flutter.github.io/assets-for-api-docs/assets/widgets/owl.jpg'),
+                      const InformationBoxBig("Waschbär",
+                          "https://images.pexels.com/photos/10767665/pexels-photo-10767665.jpeg?auto=compress&cs=tinysrgb&w=1260&h=750&dpr=1"),
+                      const InformationBoxBig("Leopard",
+                          'https://images.pexels.com/photos/62324/leopard-safari-wildier-botswana-62324.jpeg?auto=compress&cs=tinysrgb&w=1260&h=750&dpr=1'),
+                      const InformationBoxBig("Papagei",
+                          'https://images.pexels.com/photos/105808/pexels-photo-105808.jpeg'),
+                      const InformationBoxBig("Adler",
+                          'https://images.pexels.com/photos/158330/steppe-eagle-eagle-steppe-nature-158330.jpeg'),
+                    ]))));
   }
+}
+
+class InformationPair extends StatelessWidget {
+  final String first;
+  final String second;
+
+  const InformationPair(this.first, this.second);
 
   @override
   Widget build(BuildContext context) {
-    // This method is rerun every time setState is called, for instance as done
-    // by the _incrementCounter method above.
-    //
-    // The Flutter framework has been optimized to make rerunning build methods
-    // fast, so that you can just rebuild anything that needs updating rather
-    // than having to individually change instances of widgets.
-    return Scaffold(
-      appBar: AppBar(
-        // Here we take the value from the MyHomePage object that was created by
-        // the App.build method, and use it to set our appbar title.
-        title: Text(widget.title),
-        backgroundColor: Color.fromRGBO(254, 60, 0, 1),
+    return Container(
+        padding: const EdgeInsets.only(bottom: 5),
+        child: Text.rich(TextSpan(children: [
+          TextSpan(
+              text: first + ": ",
+              style:
+                  const TextStyle(fontSize: 15, fontWeight: FontWeight.bold)),
+          TextSpan(
+            text: second,
+          )
+        ])));
+  }
+}
+
+class HeaderContainer extends StatelessWidget {
+  final String headerString;
+
+  const HeaderContainer(this.headerString);
+
+  @override
+  Widget build(BuildContext context) {
+    return Container(
+      padding: const EdgeInsets.only(bottom: 20),
+      child: Text(
+        headerString,
+        style: const TextStyle(fontWeight: FontWeight.bold, fontSize: 20),
       ),
-      drawer: Drawer(
-        child: ListView(
-          padding: EdgeInsets.zero,
-          children: const <Widget>[
-            DrawerHeader(
-              decoration: BoxDecoration(
-                color: Color.fromRGBO(254, 60, 0, 1),
-              ),
-              child: Text(
-                'Main-Menu',
-                style: TextStyle(
-                  color: Colors.white,
-                  fontSize: 24,
+    );
+  }
+}
+
+class LoremTextContainer extends StatelessWidget {
+  const LoremTextContainer();
+
+  @override
+  Widget build(BuildContext context) {
+    return Container(
+        padding: const EdgeInsets.only(bottom: 15),
+        child: const Text(
+          "Lorem ipsum dolor sit amet, consetetur sadipscing elitr, sed diam nonumy eirmod tempor invidunt ut labore et dolore magna aliquyam erat, sed diam voluptua. At vero eos et accusam et justo duo dolores et ea rebum. Stet clita kasd gubergren, no sea takimata sanctus est Lorem ipsum dolor sit amet.",
+          style: TextStyle(fontSize: 15),
+        ));
+  }
+}
+
+class InformationBoxBig extends StatelessWidget {
+  final String informationBoxBigText;
+  final String informationBoxBigImg;
+  const InformationBoxBig(
+      this.informationBoxBigText, this.informationBoxBigImg);
+
+  @override
+  Widget build(BuildContext context) {
+    return Container(
+      margin: const EdgeInsets.only(bottom: 20.0),
+      decoration: BoxDecoration(
+          borderRadius: BorderRadius.circular(10),
+          border:
+              Border.all(color: const Color.fromRGBO(254, 60, 0, 1), width: 2)),
+      child: Row(
+        children: <Widget>[
+          Expanded(
+              flex: 2,
+              child: Align(
+                alignment: Alignment.centerLeft,
+                child: AspectRatio(
+                  aspectRatio: 20 / 20,
+                  child: ClipRRect(
+                    borderRadius: const BorderRadius.only(
+                        topLeft: Radius.circular(5),
+                        bottomLeft: Radius.circular(5)),
+                    child: Image(
+                      image: NetworkImage(informationBoxBigImg),
+                      width: 20,
+                      height: 20,
+                    ),
+                  ),
                 ),
+              )),
+          Expanded(
+              flex: 7,
+              child: Align(
+                  alignment: Alignment.center,
+                  child: Text(
+                    informationBoxBigText,
+                    style: const TextStyle(
+                      fontWeight: FontWeight.bold,
+                      fontSize: 15,
+                    ),
+                  ))),
+          const Expanded(
+            flex: 1,
+            child: Align(
+                alignment: Alignment.centerRight,
+                child: Icon(
+                  Icons.navigate_next,
+                  size: 24.0,
+                )),
+          ),
+        ],
+      ),
+    );
+  }
+}
+
+class InformationBoxSmall extends StatelessWidget {
+  final String informationBoxSmallText;
+
+  const InformationBoxSmall(this.informationBoxSmallText);
+
+  @override
+  Widget build(BuildContext context) {
+    return Container(
+      width: 200,
+      child: Row(
+        children: <Widget>[
+          Expanded(
+            flex: 6,
+            child: Container(
+              margin: const EdgeInsets.only(bottom: 10),
+              padding: const EdgeInsets.all(5),
+              decoration: BoxDecoration(
+                  borderRadius: BorderRadius.circular(10),
+                  border: Border.all(
+                      color: const Color.fromRGBO(254, 60, 0, 1), width: 2)),
+              child: Row(
+                children: <Widget>[
+                  const Expanded(
+                    flex: 2,
+                    child: Icon(
+                      Icons.signpost_outlined,
+                      color: Color.fromRGBO(254, 60, 0, 1),
+                      size: 24.0,
+                    ),
+                  ),
+                  Expanded(
+                    flex: 8,
+                    child: Text(
+                      informationBoxSmallText,
+                      style: const TextStyle(
+                          fontWeight: FontWeight.bold,
+                          fontSize: 15,
+                          color: Color.fromRGBO(254, 60, 0, 1)),
+                    ),
+                  ),
+                ],
               ),
             ),
-          ],
-        ),
+          ),
+        ],
       ),
-      body: Center(
-        // Center is a layout widget. It takes a single child and positions it
-        // in the middle of the parent.
-        child: Column(
-          // Column is also a layout widget. It takes a list of children and
-          // arranges them vertically. By default, it sizes itself to fit its
-          // children horizontally, and tries to be as tall as its parent.
-          //
-          // Invoke "debug painting" (press "p" in the console, choose the
-          // "Toggle Debug Paint" action from the Flutter Inspector in Android
-          // Studio, or the "Toggle Debug Paint" command in Visual Studio Code)
-          // to see the wireframe for each widget.
-          //
-          // Column has various properties to control how it sizes itself and
-          // how it positions its children. Here we use mainAxisAlignment to
-          // center the children vertically; the main axis here is the vertical
-          // axis because Columns are vertical (the cross axis would be
-          // horizontal).
-          mainAxisAlignment: MainAxisAlignment.center,
-          children: <Widget>[
-            const Text(
-              'You have pushed the button this many times:',
-            ),
-            Text(
-              '$_counter',
-              style: Theme.of(context).textTheme.headline4,
-            ),
-          ],
-        ),
-      ),
-      floatingActionButton: FloatingActionButton(
-        onPressed: _incrementCounter,
-        tooltip: 'Increment',
-        child: const Icon(Icons.search),
-      ), // This trailing comma makes auto-formatting nicer for build methods.
     );
   }
 }
